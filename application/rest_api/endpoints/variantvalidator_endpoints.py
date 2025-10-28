@@ -1,6 +1,5 @@
-from flask_restplus import Namespace, Resource
-from . import request_parser
-from . import representations
+from flask_restx import Namespace, Resource
+from utils import request_parser, representations
 import requests
 from requests.exceptions import ConnectionError
 from . import exceptions
