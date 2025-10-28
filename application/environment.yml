@@ -1,0 +1,11 @@
+name: flask-RESTX
+
+channels:
+  - defaults
+  - conda-forge
+  - bioconda
+
+dependencies:
+  - python=3.13.5
+  - pip
+  - tmux
