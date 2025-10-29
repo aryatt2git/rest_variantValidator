@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 
 RUN pip install -e .
 
-CMD["python", "rest_api/app.py"]
+CMD ["python", "rest_api/app.py"]
