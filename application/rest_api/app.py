@@ -9,14 +9,25 @@ from utils import request_parser, representations
 import logging
 from logging import handlers
 import time
-
+import sys
 
 """
 Logging
 """
 logger = logging.getLogger('rest_api')
+logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt= '%d-%m-%Y %I:%M:%S')
+
 # We are setting 2 types of logging. To screen at the level DEBUG
-logger.setLevel(logging.INFO)
+# Create a handler for stdout (Error messages)
+stdout_handler = logging.StreamHandler(sys.stdout)
+stdout_handler.setLevel(logging.DEBUG)
+stdout_handler.setFormatter(formatter)
+
+# Create a handler for stderr (Error and Critical messages)
+stderr_handler = logging.StreamHandler(sys.stderr)
+stderr_handler.setLevel(logging.ERROR)  # Log error and critical messages to stderr
+stderr_handler.setFormatter(formatter)
 
 # We will also log to a file
 # Log with a rotating file-handler. This sets the maximum size of the log to 0.5Mb and allows two additional logs
@@ -24,6 +35,11 @@ logger.setLevel(logging.INFO)
 logHandler = handlers.RotatingFileHandler('rest_api.log', maxBytes=500000, backupCount=2)
 # We want to minimise the amount of information we log to capturing bugs
 logHandler.setLevel(logging.ERROR)
+logHandler.setFormatter(formatter)
+
+# Add the handlers to the logger
+logger.addHandler(stdout_handler)
+logger.addHandler(stderr_handler)
 logger.addHandler(logHandler)
 
 
